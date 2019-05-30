@@ -1,9 +1,25 @@
 import java.util.ArrayList;
+import java.util.InputMismatchException;
 import java.util.Scanner;
 
 class MiniTest {
 
-    void processNumbers(){
+    static void runTest(){
+        boolean ok = false; //used to make sure the user only inserts numerical values
+        do {
+            try{
+                testNumbers();
+                ok = true;
+            } catch (InputMismatchException ex){
+                ex.printStackTrace();
+                System.out.println("Please enter only enter values of type integer or long!");
+            } catch (RuntimeException ex) {
+                ex.printStackTrace();
+            }
+        } while (!ok);
+    }
+
+    private static void testNumbers(){
         Scanner systemIn = new Scanner(System.in);
 
         System.out.println("Input:");
