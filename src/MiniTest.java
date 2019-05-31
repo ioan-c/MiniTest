@@ -1,7 +1,4 @@
-import java.util.ArrayList;
-import java.util.InputMismatchException;
-import java.util.List;
-import java.util.Scanner;
+import java.util.*;
 
 class MiniTest {
 
@@ -9,7 +6,7 @@ class MiniTest {
         boolean ok = false; //used to make sure the user only inserts numerical values or does not exceed 1000 tests
         do {
             try{
-                testNumbers();
+                testNumbers(readUserInput());
                 ok = true;
             } catch (InputMismatchException ex){
                 ex.printStackTrace();
@@ -20,7 +17,7 @@ class MiniTest {
         } while (!ok);
     }
 
-    private static void testNumbers(){
+    private static List<Long> readUserInput(){
         Scanner systemIn = new Scanner(System.in);
 
         System.out.println("Input:");
@@ -30,21 +27,31 @@ class MiniTest {
         }
 
         //populating list with data
-        List<Long> numbersList = new ArrayList<>();
+        List<Long> numbersList = new ArrayList<>(T);
         for(int i=0; i<T; i++){
             Long N = systemIn.nextLong();
             numbersList.add(N);
         }
+        systemIn.close();
+        return numbersList;
+    }
 
+    static List<Long> testNumbers(List<Long> numbersList){
         //testing the numbers in list
         System.out.println("Output:");
-        for(Long number : numbersList){
+        ListIterator<Long> listIter = numbersList.listIterator();
+        while (listIter.hasNext()) {
+            Long number = listIter.next();
             if(number%4 == 0){
-                System.out.println(++number);
+                Long tempNr = ++number;
+                System.out.println(tempNr);
+                listIter.set(tempNr);
             } else {
-                System.out.println(--number);
+                Long tempNr = --number;
+                System.out.println(tempNr);
+                listIter.set(tempNr);
             }
         }
-        systemIn.close();
+       return numbersList;
     }
 }
